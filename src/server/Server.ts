@@ -1,11 +1,10 @@
 import express from "express";
+import { router } from "./routes";
 
 const server = express();
 
-server.get("/", (_, res) => {
-    return res.send(
-        "'Galera, proximo semestre programa de verdade!' by Clerivaldo since 2022"
-    );
-});
+server.use(express.json());
+
+server.use(router);
 
 export { server };
