@@ -1,18 +1,15 @@
 import { Router } from "express";
 import { StatusCodes } from "http-status-codes";
+import { ControllerTarefas } from "../controller";
 
 const router = Router();
 
-router.get("/listar", (_, res) => {
+router.get("/tarefas", (_, res) => {
     return res.status(StatusCodes.OK).json({
         frase: "'Galera, proximo semestre programa de verdade!' by Clerivaldo since 2022",
     });
 });
 
-router.post("/listar", (req, res) => {
-    return res.status(StatusCodes.OK).json({
-        frase: `'Galera, proximo semestre programa de verdade!' by ${req.body.nome} since 2022`,
-    });
-});
+router.post("/tarefas", ControllerTarefas.create);
 
 export { router };
