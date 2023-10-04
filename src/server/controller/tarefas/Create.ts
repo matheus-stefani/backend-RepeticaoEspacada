@@ -15,17 +15,25 @@ const bodyValidation: yup.ObjectSchema<ITarefas> = yup.object().shape({
 });
 
 export const create = async (req: Request<{}, {}, ITarefas>, res: Response) => {
-    let validatedData: ITarefas | undefined = undefined;
-    try {
-        validatedData = await bodyValidation.validate(req.body);
-    } catch (error) {
-        const yupError = error as yup.ValidationError;
 
-        return res.status(StatusCodes.BAD_REQUEST).json({
-            errors: {
-                default: yupError.message,
-            },
+    let validatedData: ITarefas | undefined = undefined;
+
+    try {
+        validatedData = await bodyValidation.validate(req.body, {
+            abortEarly: false,
         });
+    } 
+    catch (err) {
+        const yupError = err as yup.ValidationError;
+        const errors: Record<string, string> = {};
+
+        yupError.inner.forEach((error) => {
+            if (!error.path) return;
+
+            errors[error.path] = error.message;
+        });
+
+        return res.status(StatusCodes.BAD_REQUEST).json({ errors });
     }
 
     if (!validatedData) {
