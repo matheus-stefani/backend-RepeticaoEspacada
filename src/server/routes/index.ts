@@ -10,6 +10,6 @@ router.get("/tarefas", (_, res) => {
     });
 });
 
-router.post("/tarefas", ControllerTarefas.create);
+router.post("/tarefas-ingles", ControllerTarefas.createValidation,ControllerTarefas.create);
 
 export { router };
