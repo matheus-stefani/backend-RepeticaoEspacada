@@ -13,30 +13,32 @@ type TGetAllSchemas = (getSchema: TGetSchema) => Partial<TAllSchemas>;
 
 type TValidation = (getAllSchemas: TGetAllSchemas) => RequestHandler;
 
-export const validation: TValidation = (getAllSchemas) => async (req, res, next) => {
+export const validation: TValidation =
+    (getAllSchemas) => async (req, res, next) => {
+        const schemas = getAllSchemas((shemas) => shemas);
 
-    const schemas =  getAllSchemas(shemas => shemas);
+        const errorsResult: Record<string, Record<string, string>> = {};
+        Object.entries(schemas).forEach(([key, schema]) => {
+            try {
+                schema.validateSync(req[key as TProperty], {
+                    abortEarly: false,
+                });
+            } catch (err) {
+                const yupError = err as ValidationError;
+                const errors: Record<string, string> = {};
 
-    const errorsResult: Record<string, Record<string, string>> = {};
-    Object.entries(schemas).forEach(([key, schema]) => {
-        try {
-            schema.validateSync(req[key as TProperty], {
-                abortEarly: false,
-            });
-        } catch (err) {
-            const yupError = err as ValidationError;
-            const errors: Record<string, string> = {};
-
-            yupError.inner.forEach((error) => {
-                if (!error.path) return;
-                errors[error.path] = error.message;
-            });
-            console.log(errors);
-            errorsResult[key as TProperty] = errors;
+                yupError.inner.forEach((error) => {
+                    if (!error.path) return;
+                    errors[error.path] = error.message;
+                });
+                console.log(errors);
+                errorsResult[key as TProperty] = errors;
+            }
+        });
+        if (Object.entries(errorsResult).length === 0) {
+            return next();
         }
-    });
-    if (Object.entries(errorsResult).length === 0) {
-        return next();
-    }
-    return res.status(StatusCodes.BAD_REQUEST).json({ errors: errorsResult });
-};
+        return res
+            .status(StatusCodes.BAD_REQUEST)
+            .json({ errors: errorsResult });
+    };
