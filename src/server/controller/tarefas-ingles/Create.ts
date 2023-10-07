@@ -23,10 +23,5 @@ export const create = async (
     req: Request<{}, {}, IBodyProps>,
     res: Response
 ) => {
-    return res.status(StatusCodes.CREATED).json({
-        Dados: "Sem banco de dados",
-        nome: `O nome da tarefa foi cadastrado: ${req.body.nome}`,
-        link: `O link da sua tarefa foi cadastrado: ${req.body.link}`,
-        dias: `A quantidade de dias foi cadastrado: ${req.body.dias}`,
-    });
+    return res.status(StatusCodes.CREATED).json(1);
 };
