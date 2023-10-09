@@ -1,8 +1,9 @@
+import { ITarefasIngles } from "../../models";
 
 
 declare module "knex/types/tables" {
     interface Tables {
-        //tarefaIngles: ITarefaIngles;
+        tarefasIngles: ITarefasIngles;
         //tarefaLeetCode: ITarefaLeetCode;
         //usuario: IUsuario
     }

@@ -2,12 +2,9 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from "yup";
 import { validation } from "../../shared/middleware";
+import { ITarefasIngles } from "../../database/models";
 
-interface IBodyProps {
-    nome: string;
-    link: string;
-    dias: number;
-}
+interface IBodyProps extends Omit<ITarefasIngles, "id"> {}
 
 export const createValidation = validation((getSchema) => ({
     body: getSchema<IBodyProps>(
