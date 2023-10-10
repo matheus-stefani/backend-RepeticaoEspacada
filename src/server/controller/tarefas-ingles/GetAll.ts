@@ -16,7 +16,7 @@ export const getAllValidation = validation((getSchema) => ({
             filter: yup.string().optional().default(""),
             limit: yup.number().integer().moreThan(0).optional(),
             page: yup.number().integer().moreThan(0).optional(),
-            id: yup.number().integer().positive().default(0).optional(),
+            id: yup.number().integer().default(0).optional(),
         })
     ),
 }));

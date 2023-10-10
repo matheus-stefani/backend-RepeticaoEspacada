@@ -14,7 +14,8 @@ export const getAll = async (
             .where("id", "=", id)
             .orWhere("nome", "like", `%${filter}%`)
             .offset((page - 1) * 10)
-            .limit(limit);
+            .limit(limit)
+            .orderBy("dias");
 
         if (id > 0 && result.every((e) => e.id !== id)) {
             const resultById = await Knex(ETablesNames.tarefasIngles)
