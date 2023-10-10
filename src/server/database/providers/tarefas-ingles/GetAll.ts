@@ -3,9 +3,9 @@ import { Knex } from "../../knex";
 import { ITarefasIngles } from "../../models";
 
 export const getAll = async (
-    page: number = 1,
-    limit: number = 10,
-    filter: string = "",
+    page: number,
+    limit: number,
+    filter: string,
     id = 0
 ): Promise<ITarefasIngles[] | Error> => {
     try {

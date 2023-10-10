@@ -7,6 +7,7 @@ interface IQueryProps {
     filter?: string;
     limit?: number;
     page?: number;
+    id?: number;
 }
 
 export const getAllValidation = validation((getSchema) => ({
@@ -15,6 +16,7 @@ export const getAllValidation = validation((getSchema) => ({
             filter: yup.string().optional().default(""),
             limit: yup.number().integer().moreThan(0).optional(),
             page: yup.number().integer().moreThan(0).optional(),
+            id: yup.number().integer().positive().default(0).optional(),
         })
     ),
 }));
@@ -23,12 +25,14 @@ export const getAll = async (
     req: Request<{}, {}, {}, IQueryProps>,
     res: Response
 ) => {
-    
     const result = await ProvidersTarefasIngles.getAll(
-        req.query.page,
-        req.query.limit,
-        req.query.filter
+        req.query.page || 1,
+        req.query.limit || 7,
+        req.query.filter || "",
+        Number(req.query.id)
     );
+
+    const count = await ProvidersTarefasIngles.count(req.query.filter);
 
     if (result instanceof Error) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -36,7 +40,16 @@ export const getAll = async (
                 default: result.message,
             },
         });
+    } else if (count instanceof Error) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            errors: {
+                default: count.message,
+            },
+        });
     }
+
+    res.setHeader("access-control-expose-headers", "x-total-count");
+    res.setHeader("x-total-count", count);
 
     return res.status(StatusCodes.OK).json(result);
 };

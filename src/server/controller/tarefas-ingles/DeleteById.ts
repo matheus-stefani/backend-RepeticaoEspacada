@@ -17,9 +17,15 @@ export const deleteByIdValidation = validation((getSchema) => ({
 }));
 
 export const deleteById = async (req: Request<IParamsProps>, res: Response) => {
-    const result = await ProvidersTarefasIngles.deleteById(
-        Number(req.params.id)
-    );
+    if (!req.params.id) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+            errors: {
+                default: "Informe o parâmetro id",
+            },
+        });
+    }
+
+    const result = await ProvidersTarefasIngles.deleteById(req.params.id);
 
     if (result instanceof Error) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

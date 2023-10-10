@@ -26,34 +26,27 @@ export const updateByIdValidation = validation((getSchema) => ({
     ),
 }));
 
-// interface ReqBody extends IBodyProps {
-//     dias2: number;
-//     dias3: number;
-// }
-
-// export const createReqValidation = validation((getSchema) => ({
-//     body: getSchema<{ dias2: number; dias3: number }>(
-//         yup.object().shape({
-//             dias2: yup.number().integer().moreThan(0).required(),
-//             dias3: yup.number().integer().moreThan(0).required(),
-//         })
-//     ),
-// }));
-
 export const updateById = async (
     req: Request<IParamsProps, {}, IBodyProps>,
     res: Response
 ) => {
+    if (!req.params.id) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+            errors: {
+                default: "Informe o parâmetro id",
+            },
+        });
+    }
     const result = await ProvidersTarefasIngles.UpdateById(
         req.body,
-        Number(req.params.id)
+        req.params.id
     );
-    if(result instanceof Error){
+    if (result instanceof Error) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-            errors:{
-                default: result.message
-            }
-        })
+            errors: {
+                default: result.message,
+            },
+        });
     }
     return res.status(StatusCodes.NO_CONTENT).send();
 };
