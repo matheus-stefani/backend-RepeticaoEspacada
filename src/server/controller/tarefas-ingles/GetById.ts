@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { validation } from "../../shared/middleware";
 import * as yup from "yup";
+import { ProvidersTarefasIngles } from "../../database/providers/tarefas-ingles";
 interface IParamProps {
     id?: number;
 }
@@ -15,8 +16,15 @@ export const getByIdValidation = validation((getSchema) => ({
 }));
 
 export const getById = async (req: Request<IParamProps>, res: Response) => {
-    return res.status(StatusCodes.OK).json({
-        Dados: "Sem banco de dados",
-        Id: `O id do usuário pesquisado é: ${req.params.id}`,
-    });
+    const result = await ProvidersTarefasIngles.getById(Number(req.params.id));
+
+    if (result instanceof Error) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            errors: {
+                default: result.message,
+            },
+        });
+    }
+
+    return res.status(StatusCodes.OK).json(result);
 };

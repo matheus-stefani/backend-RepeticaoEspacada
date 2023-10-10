@@ -17,6 +17,7 @@ router.get(
 router.post(
     "/tarefas-ingles",
     ControllerTarefasIngles.createValidation,
+    ControllerTarefasIngles.createReqValidation,
     ControllerTarefasIngles.create
 );
 router.delete(

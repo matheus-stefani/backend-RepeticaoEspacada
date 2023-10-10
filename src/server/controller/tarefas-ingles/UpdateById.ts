@@ -3,6 +3,7 @@ import { validation } from "../../shared/middleware";
 import * as yup from "yup";
 import { StatusCodes } from "http-status-codes";
 import { ITarefasIngles } from "../../database/models";
+import { ProvidersTarefasIngles } from "../../database/providers/tarefas-ingles";
 
 interface IParamsProps {
     id?: number;
@@ -25,15 +26,34 @@ export const updateByIdValidation = validation((getSchema) => ({
     ),
 }));
 
+// interface ReqBody extends IBodyProps {
+//     dias2: number;
+//     dias3: number;
+// }
+
+// export const createReqValidation = validation((getSchema) => ({
+//     body: getSchema<{ dias2: number; dias3: number }>(
+//         yup.object().shape({
+//             dias2: yup.number().integer().moreThan(0).required(),
+//             dias3: yup.number().integer().moreThan(0).required(),
+//         })
+//     ),
+// }));
+
 export const updateById = async (
     req: Request<IParamsProps, {}, IBodyProps>,
     res: Response
 ) => {
-    return res.status(StatusCodes.OK).json({
-        Dados: "Sem banco de dados",
-        Id: `O id do usuário atualizado: ${req.params.id}`,
-        nome: `Nome da tarefa do usuário atualizado: ${req.body.nome}`,
-        link: `Link da tarefa do usuário atualizado: ${req.body.link}`,
-        dias: `Dias da tarefa do usuário atualizado: ${req.body.dias}`,
-    });
+    const result = await ProvidersTarefasIngles.UpdateById(
+        req.body,
+        Number(req.params.id)
+    );
+    if(result instanceof Error){
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            errors:{
+                default: result.message
+            }
+        })
+    }
+    return res.status(StatusCodes.NO_CONTENT).send();
 };
