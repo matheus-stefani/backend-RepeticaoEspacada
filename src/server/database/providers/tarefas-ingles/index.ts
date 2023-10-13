@@ -4,6 +4,8 @@ import * as getById from "./GetById";
 import * as deleteById from "./DeleteById";
 import * as updateById from "./UpdateById";
 import * as count from "./Count";
+import * as updateByDay from './UpdateByDay'
+import * as getAllRegisters from './GetAllRegisters';
 export const ProvidersTarefasIngles = {
     ...create,
     ...getAll,
@@ -11,4 +13,6 @@ export const ProvidersTarefasIngles = {
     ...deleteById,
     ...updateById,
     ...count,
+    ...updateByDay,
+    ...getAllRegisters
 };

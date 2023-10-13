@@ -44,12 +44,12 @@ const tarefasInglesToInsert = [
     {
         nome: "Man of the year",
         link: "https://www.letras.mus.br/dance-gavin-dance/man-of-the-year/traducao.html",
-        dias: 3,
+        dias: 2,
     },
     {
         nome: "Man of the year",
         link: "https://www.letras.mus.br/dance-gavin-dance/man-of-the-year/traducao.html",
-        dias: 4,
+        dias: 6,
     },
     {
         nome: "Man of the year",

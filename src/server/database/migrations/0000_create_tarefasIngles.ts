@@ -1,7 +1,7 @@
 import { Knex } from "knex";
 import { ETablesNames } from "../ETablesNames";
 
-const diaAno = () => {
+export const diaAno = () => {
     const now: any = new Date();
     const start: any = new Date(now.getFullYear(), 0, 0);
     const diff = now - start;

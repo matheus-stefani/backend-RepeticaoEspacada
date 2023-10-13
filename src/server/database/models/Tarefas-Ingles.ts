@@ -3,4 +3,5 @@ export interface ITarefasIngles {
     nome: string;
     link: string;
     dias: number;
+    diaAno?: number;
 }

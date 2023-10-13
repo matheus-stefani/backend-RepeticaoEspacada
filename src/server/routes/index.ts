@@ -30,5 +30,9 @@ router.put(
     ControllerTarefasIngles.updateByIdValidation,
     ControllerTarefasIngles.updateById
 );
+router.put(
+    "/tarefas-ingles-atualizar-dias",
+    ControllerTarefasIngles.updateByDay
+);
 
 export { router };

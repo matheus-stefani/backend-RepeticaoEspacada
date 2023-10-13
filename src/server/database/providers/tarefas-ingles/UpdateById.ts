@@ -8,8 +8,8 @@ export const UpdateById = async (
 ): Promise<void | Error> => {
     try {
         const result = await Knex(ETablesNames.tarefasIngles)
-        .update(tarefaIngles)
-        .where("id", "=", id)
+            .update(tarefaIngles)
+            .where("id", "=", id);
 
         if (result > 0) return;
         return new Error("Erro ao atualizar registro");
