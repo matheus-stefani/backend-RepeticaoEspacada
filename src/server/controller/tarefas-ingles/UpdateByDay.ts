@@ -18,6 +18,7 @@ export const updateByDay = async (
                     },
                 });
     }
+    
    const result = await ProvidersTarefasIngles.updateByDay(result1);
     if (result instanceof Error) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
