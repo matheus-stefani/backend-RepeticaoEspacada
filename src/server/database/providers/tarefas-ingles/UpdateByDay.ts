@@ -16,19 +16,20 @@ export const updateByDay = async (
             if (!tarefasIngles.diaAno) return;
             tarefasIngles.dias =
                 tarefasIngles.dias - (diaAnoAtual - tarefasIngles.diaAno);
-                if(tarefasIngles.dias<0){
-                    const deletar = await ProvidersTarefasIngles.deleteById(tarefasIngles.id);
+            if (tarefasIngles.dias < 0) {
+                const deletar = await ProvidersTarefasIngles.deleteById(
+                    tarefasIngles.id
+                );
 
-                    if(deletar instanceof Error){
-                        return new Error("Erro ao deletar registro menor que 0");
-                    }
+                if (deletar instanceof Error) {
+                    return new Error("Erro ao deletar registro menor que 0");
                 }
-                tarefasIngles.diaAno=diaAnoAtual;
-          await Knex(ETablesNames.tarefasIngles)
-                .where("id", "=", tarefasIngles.id)
-                .update(tarefasIngles);
-                
-              
+            } else {
+                tarefasIngles.diaAno = diaAnoAtual;
+                await Knex(ETablesNames.tarefasIngles)
+                    .where("id", "=", tarefasIngles.id)
+                    .update(tarefasIngles);
+            }
         });
 
         return;
