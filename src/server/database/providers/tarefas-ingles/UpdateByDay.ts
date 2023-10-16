@@ -1,8 +1,8 @@
 import { ProvidersTarefasIngles } from ".";
 import { ETablesNames } from "../../ETablesNames";
 import { Knex } from "../../knex";
-import { diaAno } from "../../migrations/0000_create_tarefasIngles";
 import { ITarefasIngles } from "../../models";
+import { FunctionsProviders } from "../functions";
 
 export const updateByDay = async (
     tarefasIngles: ITarefasIngles[]
@@ -10,7 +10,7 @@ export const updateByDay = async (
     let result: number[];
     let pegar;
     try {
-        const diaAnoAtual = diaAno();
+        const diaAnoAtual = FunctionsProviders.diaAno();
 
         tarefasIngles.forEach(async (tarefasIngles) => {
             if (!tarefasIngles.diaAno) return;

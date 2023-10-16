@@ -1,3 +1,4 @@
 export enum ETablesNames {
-    tarefasIngles = 'tarefasIngles'
-}   
+    tarefasIngles = "tarefasIngles",
+    tarefasLeetCode = "tarefasLeetCode",
+}

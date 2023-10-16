@@ -35,4 +35,36 @@ router.put(
     ControllerTarefasIngles.updateByDay
 );
 
+router.get(
+    "/tarefas-leet-code",
+    ControllerTarefasIngles.getAllValidation,
+    ControllerTarefasIngles.getAll
+);
+router.get(
+    "/tarefas-leet-code/:id",
+    ControllerTarefasIngles.getByIdValidation,
+    ControllerTarefasIngles.getById
+);
+
+router.post(
+    "/tarefas-leet-code",
+    ControllerTarefasIngles.createValidation,
+    ControllerTarefasIngles.createReqValidation,
+    ControllerTarefasIngles.create
+);
+router.delete(
+    "/tarefas-leet-code/:id",
+    ControllerTarefasIngles.deleteByIdValidation,
+    ControllerTarefasIngles.deleteById
+);
+router.put(
+    "/tarefas-leet-code/:id",
+    ControllerTarefasIngles.updateByIdValidation,
+    ControllerTarefasIngles.updateById
+);
+router.put(
+    "/tarefas-leet-code-atualizar-dias",
+    ControllerTarefasIngles.updateByDay
+);
+
 export { router };
