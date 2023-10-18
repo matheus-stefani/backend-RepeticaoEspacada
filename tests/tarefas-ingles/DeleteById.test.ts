@@ -7,11 +7,24 @@ describe("Tarefas-Ingles - DeleteById", () => {
             nome: "Still Loving You",
             link: "https://www.letras.mus.br/scorpions/35388/traducao.html",
             dias: 5,
+            dias2: 7,
+            dias3: 9,
         });
+        const [del1, del2, del3] = result.body;
 
-        const deleta = await testServer.delete("/tarefas-ingles/1").send();
+        const deleta1 = await testServer
+            .delete(`/tarefas-ingles/${del1}`)
+            .send();
+        const deleta2 = await testServer
+            .delete(`/tarefas-ingles/${del2}`)
+            .send();
+        const deleta3 = await testServer
+            .delete(`/tarefas-ingles/${del3}`)
+            .send();
 
-        expect(deleta.statusCode).toEqual(StatusCodes.OK);
+        expect(deleta1.statusCode).toEqual(StatusCodes.NO_CONTENT);
+        expect(deleta2.statusCode).toEqual(StatusCodes.NO_CONTENT);
+        expect(deleta3.statusCode).toEqual(StatusCodes.NO_CONTENT);
     });
 
     it("Tenta deletar registros com id invalido", async () => {
@@ -19,6 +32,8 @@ describe("Tarefas-Ingles - DeleteById", () => {
             nome: "Still Loving You",
             link: "https://www.letras.mus.br/scorpions/35388/traducao.html",
             dias: 5,
+            dias2: 7,
+            dias3: 9,
         });
 
         const deleta = await testServer.delete("/tarefas-ingles/-1").send();

@@ -7,11 +7,20 @@ describe("Tarefas-Ingles - GetById", () => {
             nome: "Still Loving You",
             link: "https://www.letras.mus.br/scorpions/35388/traducao.html",
             dias: 5,
+            dias2: 7,
+            dias3: 9,
         });
 
-        const buscaPeloId = await testServer.get("/tarefas-ingles/1").send();
+        const buscaPeloId = await testServer
+            .get(`/tarefas-ingles/${result.body[0]}`)
+            .send();
 
         expect(buscaPeloId.statusCode).toEqual(StatusCodes.OK);
+        expect(buscaPeloId.body).toHaveProperty("id");
+        expect(buscaPeloId.body).toHaveProperty("nome");
+        expect(buscaPeloId.body).toHaveProperty("link");
+        expect(buscaPeloId.body).toHaveProperty("dias");
+        expect(buscaPeloId.body).toHaveProperty("diaAno");
     });
 
     it("Busca por registros com id invalido", async () => {
@@ -19,6 +28,8 @@ describe("Tarefas-Ingles - GetById", () => {
             nome: "Still Loving You",
             link: "https://www.letras.mus.br/scorpions/35388/traducao.html",
             dias: 5,
+            dias2: 7,
+            dias3: 9,
         });
 
         const buscaPeloId = await testServer.get("/tarefas-ingles/-1").send();

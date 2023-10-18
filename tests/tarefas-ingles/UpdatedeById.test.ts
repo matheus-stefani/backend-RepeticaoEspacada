@@ -7,15 +7,17 @@ describe("Tarefas-Ingles - UpdateById", () => {
             nome: "Still Loving You",
             link: "https://www.letras.mus.br/scorpions/35388/traducao.html",
             dias: 5,
+            dias2: 7,
+            dias3: 9,
         });
-
-        const atualizaPeloId = await testServer.put("/tarefas-ingles/1").send({
-            nome: "Rock the Night",
-            link: "https://www.letras.mus.br/europe/13209/traducao.html#:~:text=Arrase%20Na%20Noite&text=O%20que%20voc%C3%AA%20quer%3F",
-            dias: 7,
-        });
-
-        expect(atualizaPeloId.statusCode).toEqual(StatusCodes.OK);
+        const updateRegistro = await testServer
+            .put(`/tarefas-ingles/${result.body[0]}`)
+            .send({
+                nome: "Crazy train",
+                link: "https://www.letras.mus.br/ozzy-osbourne/29623/traducao.html",
+                dias: 11,
+            });
+        expect(updateRegistro.statusCode).toEqual(StatusCodes.NO_CONTENT);
     });
 
     it("Tenta atualizar um registros com id invalido", async () => {
@@ -23,16 +25,23 @@ describe("Tarefas-Ingles - UpdateById", () => {
             nome: "Still Loving You",
             link: "https://www.letras.mus.br/scorpions/35388/traducao.html",
             dias: 5,
+            dias2: 7,
+            dias3: 9,
         });
-
-        const atualizaPeloId = await testServer.put("/tarefas-ingles/-1").send({
-            nome: "Rock the Night",
-            link: "https://www.letras.mus.br/europe/13209/traducao.html#:~:text=Arrase%20Na%20Noite&text=O%20que%20voc%C3%AA%20quer%3F",
-            dias: 7,
-        });
-
-        expect(atualizaPeloId.statusCode).toEqual(StatusCodes.BAD_REQUEST);
-        expect(atualizaPeloId.body).toHaveProperty("errors.params.id");
+        const updateRegistro = await testServer
+            .put(`/tarefas-ingles/999999999`)
+            .send({
+                nome: "Crazy train",
+                link: "https://www.letras.mus.br/ozzy-osbourne/29623/traducao.html",
+                dias: 11,
+            });
+        expect(updateRegistro.statusCode).toEqual(
+            StatusCodes.INTERNAL_SERVER_ERROR
+        );
+        expect(updateRegistro.body).toHaveProperty(
+            "errors.default",
+            "Erro ao atualizar registro"
+        );
     });
 
     it("Tenta atualizar registros com os tres campos inválidos", async () => {
@@ -40,16 +49,27 @@ describe("Tarefas-Ingles - UpdateById", () => {
             nome: "Still Loving You",
             link: "https://www.letras.mus.br/scorpions/35388/traducao.html",
             dias: 5,
+            dias2: 7,
+            dias3: 9,
         });
-
-        const atualizaPeloId = await testServer.put("/tarefas-ingles/1").send({
-            nome: "Ro",
-            link: "www.letras.mus.br/europe/13209/traducao.html#:~:text=Arrase%20Na%20Noite&text=O%20que%20voc%C3%AA%20quer%3F",
-            dias: 0,
-        });
-        expect(atualizaPeloId.statusCode).toEqual(StatusCodes.BAD_REQUEST);
-        expect(atualizaPeloId.body).toHaveProperty("errors.body.nome");
-        expect(atualizaPeloId.body).toHaveProperty("errors.body.link");
-        expect(atualizaPeloId.body).toHaveProperty("errors.body.dias");
+        const updateRegistro = await testServer
+            .put(`/tarefas-ingles/${result.body[0]}`)
+            .send({
+                nome: "Cr",
+                link: "/w.letras.mus.br/ozzy-osbourne/29623/traducao.html",
+                dias: -3,
+            });
+            expect(updateRegistro.body).toHaveProperty(
+                "errors.body.nome",
+                "Deve ter pelo menos 3 caracteres"
+            );
+            expect(updateRegistro.body).toHaveProperty(
+                "errors.body.link",
+                "Deve ter um formato de URL válida"
+            );
+            expect(updateRegistro.body).toHaveProperty(
+                "errors.body.dias",
+                "Deve ser maior que 0"
+            );
     });
 });
