@@ -3,7 +3,7 @@ import { ETablesNames } from "../ETablesNames";
 
 export async function up(knex: Knex): Promise<void> {
     return knex.schema
-        .createTable(ETablesNames.usuarios, (table) => {
+        .createTable(ETablesNames.usuario, (table) => {
             table.bigIncrements("id").primary().index();
             table.string("nome").checkLength("<=", 155).notNullable();
             table
@@ -16,12 +16,12 @@ export async function up(knex: Knex): Promise<void> {
             table.comment("Tabela usada para armazenar usuários no sistema");
         })
         .then(() => {
-            console.log(`# Created table ${ETablesNames.usuarios}`);
+            console.log(`# Created table ${ETablesNames.usuario}`);
         });
 }
 
 export async function down(knex: Knex): Promise<void> {
-    return knex.schema.dropTable(ETablesNames.usuarios).then(() => {
-        console.log(`# Dropped table ${ETablesNames.usuarios}`);
+    return knex.schema.dropTable(ETablesNames.usuario).then(() => {
+        console.log(`# Dropped table ${ETablesNames.usuario}`);
     });
 }

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ControllerTarefasIngles } from "../controller";
+import { ControllerTarefasIngles, ControllerUsuarios } from "../controller";
 
 const router = Router();
 
@@ -35,6 +35,12 @@ router.put(
     ControllerTarefasIngles.updateByDay
 );
 
+
+
+
+
+
+
 router.get(
     "/tarefas-leet-code",
     ControllerTarefasIngles.getAllValidation,
@@ -65,6 +71,22 @@ router.put(
 router.put(
     "/tarefas-leet-code-atualizar-dias",
     ControllerTarefasIngles.updateByDay
+);
+
+
+
+
+
+
+router.post(
+    "/cadastrar",
+    ControllerUsuarios.signUpValidation,
+    ControllerUsuarios.signUp
+);
+router.post(
+    "/entrar",
+    ControllerUsuarios.signInValidation,
+    ControllerUsuarios.signIn
 );
 
 export { router };

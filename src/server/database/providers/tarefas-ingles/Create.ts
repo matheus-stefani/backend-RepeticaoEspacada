@@ -13,7 +13,6 @@ export const create = async (
             .insert([tarefasIngles1, tarefasIngles2, tarefasIngles3])
             .returning("id");
 
-
         result.forEach((e) => {
             if (typeof e === "object") {
                 array.push(e.id);
