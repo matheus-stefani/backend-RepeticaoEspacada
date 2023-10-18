@@ -1,5 +1,9 @@
 import { Router } from "express";
-import { ControllerTarefasIngles, ControllerUsuarios } from "../controller";
+import {
+    ControllerTarefasIngles,
+    ControllerTarefasLeetCode,
+    ControllerUsuarios,
+} from "../controller";
 
 const router = Router();
 
@@ -35,48 +39,37 @@ router.put(
     ControllerTarefasIngles.updateByDay
 );
 
-
-
-
-
-
-
 router.get(
     "/tarefas-leet-code",
-    ControllerTarefasIngles.getAllValidation,
-    ControllerTarefasIngles.getAll
+    ControllerTarefasLeetCode.getAllValidation,
+    ControllerTarefasLeetCode.getAll
 );
 router.get(
     "/tarefas-leet-code/:id",
-    ControllerTarefasIngles.getByIdValidation,
-    ControllerTarefasIngles.getById
+    ControllerTarefasLeetCode.getByIdValidation,
+    ControllerTarefasLeetCode.getById
 );
 
 router.post(
     "/tarefas-leet-code",
-    ControllerTarefasIngles.createValidation,
-    ControllerTarefasIngles.createReqValidation,
-    ControllerTarefasIngles.create
+    ControllerTarefasLeetCode.createValidation,
+    ControllerTarefasLeetCode.createReqValidation,
+    ControllerTarefasLeetCode.create
 );
 router.delete(
     "/tarefas-leet-code/:id",
-    ControllerTarefasIngles.deleteByIdValidation,
-    ControllerTarefasIngles.deleteById
+    ControllerTarefasLeetCode.deleteByIdValidation,
+    ControllerTarefasLeetCode.deleteById
 );
 router.put(
     "/tarefas-leet-code/:id",
-    ControllerTarefasIngles.updateByIdValidation,
-    ControllerTarefasIngles.updateById
+    ControllerTarefasLeetCode.updateByIdValidation,
+    ControllerTarefasLeetCode.updateById
 );
 router.put(
     "/tarefas-leet-code-atualizar-dias",
-    ControllerTarefasIngles.updateByDay
+    ControllerTarefasLeetCode.updateByDay
 );
-
-
-
-
-
 
 router.post(
     "/cadastrar",

@@ -22,7 +22,7 @@ export const updateByIdValidation = validation((getSchema) => ({
             nome: yup.string().min(3).required(),
             link1: yup.string().url().required(),
             link2: yup.string().url().required(),
-            desc: yup.string().required(),
+            desc: yup.string().required().min(5),
             dias: yup.number().integer().moreThan(0).required(),
             diaAno: yup.number().integer().optional(),
         })

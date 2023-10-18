@@ -14,7 +14,7 @@ export const createValidation = validation((getSchema) => ({
             nome: yup.string().required().min(3).max(155),
             link1: yup.string().url().required().max(255),
             link2: yup.string().url().required().max(255),
-            desc: yup.string().required().max(255),
+            desc: yup.string().min(5).required().max(255),
             dias: yup.number().integer().moreThan(0).required(),
             diaAno: yup.number().integer().optional(),
         })
