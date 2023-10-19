@@ -5,6 +5,7 @@ import { validation } from "../../shared/middleware";
 import { IUsuario } from "../../database/models";
 
 import { ProvidersUsuarios } from "../../database/providers/usuarios";
+import { PasswordCrypto } from "../../shared/services";
 
 interface IBodyProps extends Omit<IUsuario, "id" | "nome"> {}
 
@@ -22,6 +23,7 @@ export const signIn = async (
     res: Response
 ) => {
     const { email, senha } = req.body;
+
     const result = await ProvidersUsuarios.getByEmail(email);
 
     if (result instanceof Error) {
@@ -31,7 +33,8 @@ export const signIn = async (
             },
         });
     }
-    if (senha !== result.senha) {
+    const isTest = await PasswordCrypto.verifyPassword(senha,result.senha);
+    if (!isTest) {
         return res.status(StatusCodes.UNAUTHORIZED).json({
             errors: {
                 default: "Email ou senha são inválidos",
