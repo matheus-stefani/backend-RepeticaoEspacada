@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from "yup";
-import { validation } from "../../shared/middleware";
+import { JWTService, validation } from "../../shared/middleware";
 import { IUsuario } from "../../database/models";
 
 import { ProvidersUsuarios } from "../../database/providers/usuarios";
@@ -33,7 +33,7 @@ export const signIn = async (
             },
         });
     }
-    const isTest = await PasswordCrypto.verifyPassword(senha,result.senha);
+    const isTest = await PasswordCrypto.verifyPassword(senha, result.senha);
     if (!isTest) {
         return res.status(StatusCodes.UNAUTHORIZED).json({
             errors: {
@@ -41,8 +41,13 @@ export const signIn = async (
             },
         });
     } else {
-        return res
-            .status(StatusCodes.OK)
-            .json({ accessToken: "teste.teste.teste" });
+        const accessToken = JWTService.sign({ uid: result.id });
+
+        if (accessToken === "JWT_SECRET_NOT_FOUND") {
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                error: { default: "Erro ao gerar o token de acesso" },
+            });
+        }
+        return res.status(StatusCodes.OK).json({ accessToken });
     }
 };

@@ -25,6 +25,7 @@ export const getAll = async (
     req: Request<{}, {}, {}, IQueryProps>,
     res: Response
 ) => {
+    console.log("idUsuario", req.headers.idUsuario);
     const result = await ProvidersTarefasIngles.getAll(
         req.query.page || 1,
         req.query.limit || 7,
