@@ -3,5 +3,6 @@ export interface ITarefasIngles {
     nome: string;
     link: string;
     dias: number;
+    isCompleted?: boolean;
     diaAno?: number;
 }

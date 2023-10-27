@@ -10,6 +10,7 @@ export async function up(knex: Knex): Promise<void> {
             table.string("link1").checkLength("<=", 255).index().notNullable();
             table.string("link2").checkLength("<=", 255).index().notNullable();
             table.string("desc").checkLength("<=", 255).index().notNullable();
+            table.boolean("isCompleted").index().defaultTo(false).notNullable();
             table.integer("dias").index().notNullable();
             table
                 .integer("diaAno")

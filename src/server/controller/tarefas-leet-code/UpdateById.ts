@@ -25,6 +25,7 @@ export const updateByIdValidation = validation((getSchema) => ({
             desc: yup.string().required().min(5),
             dias: yup.number().integer().moreThan(0).required(),
             diaAno: yup.number().integer().optional(),
+            isCompleted: yup.boolean().required(),
         })
     ),
 }));

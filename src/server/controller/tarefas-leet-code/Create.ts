@@ -17,6 +17,7 @@ export const createValidation = validation((getSchema) => ({
             desc: yup.string().min(5).required().max(255),
             dias: yup.number().integer().moreThan(0).required(),
             diaAno: yup.number().integer().optional(),
+            isCompleted: yup.boolean().required(),
         })
     ),
 }));

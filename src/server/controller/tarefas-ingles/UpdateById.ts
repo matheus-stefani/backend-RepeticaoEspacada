@@ -23,6 +23,7 @@ export const updateByIdValidation = validation((getSchema) => ({
             link: yup.string().url().required(),
             dias: yup.number().integer().moreThan(0).required(),
             diaAno: yup.number().integer().optional(),
+            isCompleted: yup.boolean().required(),
         })
     ),
 }));

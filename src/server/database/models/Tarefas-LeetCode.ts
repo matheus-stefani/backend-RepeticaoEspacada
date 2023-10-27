@@ -5,5 +5,6 @@ export interface ITarefasLeetCode {
     link2: string;
     desc: string;
     dias: number;
+    isCompleted?: boolean;
     diaAno?: number;
 }

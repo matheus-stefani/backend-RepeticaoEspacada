@@ -14,6 +14,7 @@ export const createValidation = validation((getSchema) => ({
             link: yup.string().url().required().max(255),
             dias: yup.number().integer().moreThan(0).required(),
             diaAno: yup.number().integer().optional(),
+            isCompleted: yup.boolean().required(),
         })
     ),
 }));
